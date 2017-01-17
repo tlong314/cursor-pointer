@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8" />
+<title>CursorPointer.js</title>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui' />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style>
+body {
+	background: gray;
+}
+
+#wrapper {
+	background: white;
+	margin: 50px;
+	padding: 20px 0 40px;
+	width: 90%;
+}
+
+h1, h2 {
+	text-align: center;
+}
+
+div {
+	text-align: center;
+}
+
+div p {
+	max-width: 400px;
+	text-align: left;
+	margin: 20px auto;
+	padding: 10px;
+	box-shadow: 1px 1px 1px black;
+}
+
+figure {
+	max-width: 400px;
+	margin: 20px auto;
+	text-align: left;
+
+	padding: 5px;
+}
+
+button {
+	height: 40px;
+	margin: 0 20px;
+}
+
+.jsKeyword {
+	color: green;
+}
+
+.jsString {
+	color: orange;
+}
+
+.jsCode {
+	background: #eee;
+}
+
+span.jsCode {
+	padding: 2px 4px;
+}
+</style>
+</head>
+<body>
+	<div id="wrapper">
+		<h1>
+			CursorPointer
+		</h1>
+		<h2>
+			Demo page
+		</h2>
+		<div>
+			<p>
+				The CursorPointer JS module requires a browser that supports window.getComputedStyle. The browser should also support the Element method .getBoundingClientRect().
+			</p>
+			<p>
+				There are no dependencies on other scripts. If your browser supports those methods, then you should notice your cursor pointing to the button that wants your attention.
+			</p>
+		</div>
+		<div>
+			<button id="button1">Click on me!</button>
+			<button id="button2">Hm...</button>
+		</div>
+		<div>
+			<p>
+				When that button has been clicked, the other button will ask for your attention, and the pointer will start pointing there.
+			</p>
+		</div>
+		<div>
+			<p>
+				To use the module, put a reference to cursorpointer.js in your page. Then in your own script, use <span class="jsCode">CursorPointer.pointAt()</span>, sending the element you want the cursor to point at.
+			</p>
+				<figure class="jsCode">
+					<code>
+						<span class="jsKeyword">var</span> elm = document.getElementById(<span class="jsString">"myElement"</span>);
+						<br/>
+						<br/>
+							CursorPointer.pointAt(elm); 
+					</code>
+				</figure>
+		</div>
+	</div>
+<script src="cursorpointer.js"></script>
+<script>
+var button1 = null,
+	button2 = null;
+
+onload = function init() {
+	button1 = document.getElementById("button1");
+	button2 = document.getElementById("button2");
+
+	CursorPointer.pointAt(button1);
+
+	// Change which button is being pointed at when they are clicked.
+	button1.addEventListener("click", function(e) {
+		e.preventDefault();
+		
+		CursorPointer.pointAt(button2);
+		button1.innerHTML = "Hm...";
+		button2.innerHTML = "No,click me!";
+	});
+	
+	button2.addEventListener("click", function(e) {
+		e.preventDefault();
+		
+		CursorPointer.pointAt(button1);
+		button2.innerHTML = "Hm...";
+		button1.innerHTML = "No,click me!";
+	});
+};
+</script>
+</body>
+</html>
